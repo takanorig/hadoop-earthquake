@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="hadoop-earthquake" default="create-jar" basedir=".">
+
+    <!-- プロジェクト定義 -->
+    <property name="hadoop.home" value="C:/MyWork/EclipseWorkspace/hadoop-0.20.2-cdh3u2" />
+
+    <property name="src.dir" value="src/main/java" />
+    <property name="classes.dir" value="target/classes" />
+    <property name="lib.dir" value="lib" />
+    <property name="dist.dir" value="target" />
+
+    <property name="src.encoding" value="UTF-8" />
+
+    <path id="project.classpath">
+        <fileset dir="${hadoop.home}">
+            <include name="*.jar" />
+            <include name="*.zip" />
+        </fileset>
+        <fileset dir="${hadoop.home}/lib">
+            <include name="*.jar" />
+            <include name="*.zip" />
+        </fileset>
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+            <include name="*.zip" />
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="${classes.dir}" />
+    </target>
+
+    <target name="compile" depends="clean" description="コンパイル">
+        <mkdir dir="${classes.dir}" />
+
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" encoding="${src.encoding}">
+            <classpath refid="project.classpath" />
+        </javac>
+    </target>
+
+    <target name="create-jar" depends="compile" description="JARファイルを生成する">
+        <jar basedir="${classes.dir}" jarfile="${dist.dir}/${ant.project.name}.jar" />
+    </target>
+
+</project>
